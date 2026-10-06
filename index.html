@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<base target="_blank">
+<title>2026년 9월 월간 업무 보고</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: 개인 운영 리포트 — 상단 헤더·핵심 숫자 → 요약/총평 → 기여도 분포 → 업무 묶음별 상세 → 근거 링크 */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#172033; --muted:#5A6577; --line:#DCE1E8; --soft:#EDF1F5;
+  --accent:#0D6B70; --accent-soft:#DDF0EF;
+  --lv5:#B9440F; --lv5-soft:#FBE7DC;
+  --lv4:#0D6B70; --lv4-soft:#DDF0EF;
+  --lv3:#9A6D07; --lv3-soft:#F8EDCF;
+  --risk:#B42318; --risk-soft:#FDE6E3;
+  --f-body:"IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-data:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E1318; --surface:#151C24; --ink:#E5EAF1; --muted:#97A2B3; --line:#27313D; --soft:#1B242E;
+  --accent:#43B9B5; --accent-soft:#163536;
+  --lv5:#F0834F; --lv5-soft:#3A2116;
+  --lv4:#43B9B5; --lv4-soft:#163536;
+  --lv3:#E0B24C; --lv3-soft:#352B12;
+  --risk:#F2857A; --risk-soft:#3B1C1A;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E1318; --surface:#151C24; --ink:#E5EAF1; --muted:#97A2B3; --line:#27313D; --soft:#1B242E;
+  --accent:#43B9B5; --accent-soft:#163536;
+  --lv5:#F0834F; --lv5-soft:#3A2116;
+  --lv4:#43B9B5; --lv4-soft:#163536;
+  --lv3:#E0B24C; --lv3-soft:#352B12;
+  --risk:#F2857A; --risk-soft:#3B1C1A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:grid;gap:28px}
+h1,h2,h3{margin:0;text-wrap:balance;line-height:1.3}
+p{margin:0}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.num{font-family:var(--f-data);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+
+/* Header */
+header.top{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line)}
+header.top .who{display:grid;gap:6px;min-width:0}
+header.top h1{font-size:clamp(24px,3.4vw,32px);font-weight:700;letter-spacing:-.02em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px}
+.meta span+span::before{content:"·";margin-right:14px;color:var(--line)}
+.verdict{display:flex;align-items:center;gap:14px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.verdict .lbl{font-size:12px;color:var(--muted);line-height:1.3}
+.verdict .val{font-size:20px;font-weight:700;color:var(--accent);line-height:1.2}
+.verdict .avg{padding-left:14px;border-left:1px solid var(--line)}
+.verdict .avg .val{color:var(--ink)}
+.verdict .avg .val small{font-size:13px;color:var(--muted);font-weight:500}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:4px;align-content:start}
+.kpi .v{font-size:28px;font-weight:600;line-height:1.15}
+.kpi .v small{font-size:14px;font-weight:500;color:var(--muted);margin-left:2px;font-family:var(--f-body)}
+.kpi .v.word{font-family:var(--f-body);font-weight:700;letter-spacing:-.01em}
+.kpi .k{font-size:14px;font-weight:600}
+.kpi .s{font-size:12.5px;color:var(--muted);line-height:1.45}
+@media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.kpi .v{font-size:24px}}
+
+/* Summary row */
+.summary{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}
+.summary>*{min-width:0}
+.lede{display:grid;gap:12px;padding:4px 0}
+.lede p.big{font-size:17px;line-height:1.7;max-width:62ch}
+.lede p.big b{font-weight:600;background:linear-gradient(transparent 62%,var(--accent-soft) 62%)}
+.verdict-box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;gap:10px}
+.verdict-box p{color:var(--ink);font-size:14.5px}
+.verdict-box b{font-weight:600}
+@media (max-width:820px){.summary{grid-template-columns:1fr}}
+
+/* Section heads */
+.sec{display:grid;gap:14px}
+.sec-h{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+.sec-h h2{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.sec-h .hint{font-size:13px;color:var(--muted)}
+
+/* Contribution chart */
+.chart-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;gap:14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.bars{display:grid;gap:2px}
+.bar-row{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr) 64px;gap:14px;align-items:center;padding:7px 8px;margin-inline:-8px;border-radius:8px;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.bar-row:hover{background:var(--soft)}
+.bar-row .nm{font-size:14px;font-weight:500;min-width:0}
+.bar-row .grp{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.track{position:relative;height:14px;border-radius:4px;background:var(--soft);
+  background-image:linear-gradient(to right, transparent calc(20% - 1px), var(--line) calc(20% - 1px), var(--line) 20%, transparent 20%),
+  linear-gradient(to right, transparent calc(40% - 1px), var(--line) calc(40% - 1px), var(--line) 40%, transparent 40%),
+  linear-gradient(to right, transparent calc(60% - 1px), var(--line) calc(60% - 1px), var(--line) 60%, transparent 60%),
+  linear-gradient(to right, transparent calc(80% - 1px), var(--line) calc(80% - 1px), var(--line) 80%, transparent 80%)}
+.fill{position:absolute;inset:0 auto 0 0;border-radius:4px}
+.bar-row .sc{font-size:13px;font-weight:600;text-align:right}
+.axis{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr) 64px;gap:14px;font-size:11.5px;color:var(--muted)}
+.axis .ticks{position:relative;height:16px}
+.axis .ticks span{position:absolute;transform:translateX(-50%)}
+.axis .ticks span:first-child{transform:none}
+.axis .ticks span:last-child{transform:translateX(-100%)}
+@media (max-width:620px){
+  .bar-row,.axis{grid-template-columns:minmax(0,1fr) 52px}
+  .bar-row .nm{grid-column:1 / -1}
+  .axis>span:first-child{display:none}
+}
+
+/* Pills */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill.l5{color:var(--lv5);background:var(--lv5-soft)}
+.pill.l4{color:var(--lv4);background:var(--lv4-soft)}
+.pill.l3{color:var(--lv3);background:var(--lv3-soft)}
+.pill.risk{color:var(--risk);background:var(--risk-soft)}
+
+/* Filter chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip .c{font-family:var(--f-data);font-size:12px;opacity:.7;margin-left:4px}
+
+/* Group blocks */
+.groups{display:grid;gap:22px}
+.group{display:grid;gap:12px}
+.group-h{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.group-h h3{font-size:16px;font-weight:700}
+.group-h p{font-size:13.5px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:12px;align-content:start;scroll-margin-top:16px;transition:border-color .3s, box-shadow .3s}
+.card.flash{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.card-h{display:flex;gap:10px;justify-content:space-between;align-items:flex-start}
+.card-h h4{margin:0;font-size:15.5px;font-weight:600;line-height:1.4;min-width:0}
+.dots{display:inline-flex;gap:3px;margin-left:2px}
+.dots b{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.25}
+.dots b.on{opacity:1}
+.field{display:grid;gap:3px}
+.field .fl{font-size:11.5px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
+.field p{font-size:14px;line-height:1.6}
+.facts{display:flex;flex-wrap:wrap;gap:6px}
+.fact{font-size:12.5px;padding:3px 8px;border-radius:6px;background:var(--soft);color:var(--ink)}
+.fact .num{font-weight:600}
+.risks{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.risks li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;font-size:14px}
+.refs{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px}
+
+/* Evidence list */
+.evidence{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 20px}
+.evidence ul{list-style:none;margin:0;padding:0}
+.evidence li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.evidence li:last-child{border-bottom:0}
+.evidence .links{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:flex-end;font-size:13px}
+@media (max-width:620px){.evidence li{grid-template-columns:1fr}.evidence .links{justify-content:flex-start}}
+
+footer{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="who">
+      <span class="eyebrow">개인 월간 리포트 · 2026년 9월</span>
+      <h1>9월 월간 업무 보고</h1>
+      <div class="meta"><span>박정원</span><span>배달품질팀 · 마켓플레이스실</span><span class="num">2026.09.01 – 09.30</span></div>
+    </div>
+    <div class="verdict" aria-label="종합 평가">
+      <div><div class="lbl">종합 기여도</div><div class="val">높음</div></div>
+      <div class="avg"><div class="lbl">업무 영역 평균</div><div class="val num" id="avgScore">4.0 <small>/ 5</small></div></div>
+    </div>
+  </header>
+
+  <section class="kpis" aria-label="핵심 숫자">
+    <div class="kpi"><span class="v num">약 200<small>개</small></span><span class="k">신규 Zone 오픈 상점</span><span class="s">신규 Zone 2곳<br>요금제·할증 세팅, 상점 이관</span></div>
+    <div class="kpi"><span class="v num">3<small>건</small></span><span class="k">SLA 대시보드 개선</span><span class="s">0건→SLA 0% 누적 반영 문제 수정,<br>신규 협력사·Zone 반영, 운영 현황표 자동화</span></div>
+    <div class="kpi"><span class="v num">14<small>건</small></span><span class="k">협력사 Lead 등록</span><span class="s">중복·대표자·연락처·활동 Zone 기준으로 관리</span></div>
+    <div class="kpi"><span class="v word" aria-hidden="true">&nbsp;</span><span class="k">협력사·라이더 온보딩</span><span class="s">계약서 작성 → 인트라 벤더·거래처 등록<br>→ 라이더 이력 확인·소속 변경</span></div>
+  </section>
+
+  <section class="summary">
+    <div class="lede">
+      <span class="eyebrow">이번 달 요약</span>
+      <p class="big">일상 운영 업무와 함께 <b>신규 Zone 오픈·할증·정산 전환</b>을 병행했습니다. 신규 Zone 2곳 오픈을 위한 요금제·할증 세팅과 팀 대시보드 관리·개선처럼 운영에 직접 영향을 주는 업무를 맡았고, SLA 모니터링·Lead 발굴·협력사와 라이더 등록·벤더 물품 관리 같은 반복 업무는 절차로 정리했습니다.</p>
+    </div>
+    <div class="verdict-box">
+      <span class="eyebrow">부서 기여도 총평</span>
+      <p>단순 운영 지원을 넘어 <b>신규 Zone 런칭, 원가·할증 정합성, 벤더 정산 정확성 검토</b>에 직접 기여했습니다. 대규모 할증 이관과 협력사·라이더 등록은 비용·지급·운영 안정성에 미치는 영향이 큽니다.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-contrib">
+    <div class="sec-h">
+      <h2 id="h-contrib">업무 영역별 기여도</h2>
+      <span class="hint">평가 기준: 운영 안정성 · 매출·원가 영향 · 정산 정확도 · 효율화와 재발 방지</span>
+    </div>
+    <div class="chart-card">
+      <div class="legend" id="legend"></div>
+      <div class="bars" id="bars"></div>
+      <div class="axis" aria-hidden="true"><span></span><div class="ticks"><span style="left:0">0</span><span style="left:20%">1</span><span style="left:40%">2</span><span style="left:60%">3</span><span style="left:80%">4</span><span style="left:100%">5</span></div><span></span></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-detail">
+    <div class="sec-h">
+      <h2 id="h-detail">업무 묶음별 상세</h2>
+      <div class="chips" id="chips" role="group" aria-label="업무 묶음 필터"></div>
+    </div>
+    <div class="groups" id="groups"></div>
+  </section>
+
+
+  <footer>
+    <span>외부 공유용 요약본 · 사내 문서 링크와 세부 정보는 제외했습니다</span>
+    <span class="num">2026년 10월 작성</span>
+  </footer>
+</div>
+
+<script>
+const GROUPS = [
+  { id:'zone', name:'신규 Zone', desc:'요금제와 할증으로 원가에 바로 영향을 주는 업무' },
+  { id:'ops', name:'SLA · 대시보드', desc:'매일 모니터링과 대시보드 지표 개선' },
+  { id:'settle', name:'정산', desc:'인트라 기준 정산 전환 지원' },
+  { id:'partner', name:'협력사 · 라이더', desc:'운영사 확보부터 등록, 물품까지' },
+  { id:'season', name:'한시 할증', desc:'명절 기간 비용 정책 반영' },
+];
+const AREAS = [
+  { id:'zone-open', g:'zone', name:'신규 Zone 오픈 세팅', score:4,
+    work:'시간대 원가 요금제, 시간대·지역 폴리곤 할증, 기존 할증 이관 및 상점별 요금제 대량 수정',
+    why:'신규 Zone들의 런칭과 직접 연결된 업무로, 원가 정합성과 기존 상가 할증 유지 여부에 즉시 영향을 미침',
+    facts:[['약 200','개 상점'],['신규 Zone 2곳','']],
+    refs:[] },
+  { id:'sla', g:'ops', name:'SLA 모니터링 및 대시보드 개선', score:4,
+    work:'지역·협력사 SLA 준수율과 픽업요청 준수율을 매일 확인하고 대시보드 개선 사항을 점검',
+    why:'이상 지역과 권역 문제를 조기에 발견하여 배차 지연과 SLA 하락의 장기화를 예방하는 상시 통제 역할',
+    facts:[['매일','SLA · 픽업요청 준수율 확인'],['3','건 대시보드 개선']],
+    notes:{ title:'9월 대시보드 개선', cls:'l4', items:[
+      ['지표 수정','수행 건수 0건이 SLA 0%로 측정돼 누적지표에 그대로 반영되던 문제 개선'],
+      ['업데이트','신규 협력사 및 Zone 반영'],
+      ['자동화','협력사 Lead·Zone 관리 페이지의 Zone 운영 현황표 작업 (운영·미운영 협력사 표시 자동화)'],
+    ]},
+    refs:[] },
+  { id:'settle', g:'settle', name:'벤더 정산 등록·관리', score:3,
+    work:'주차별 관리비·프로모션·보험료 소급 입력, 기사별 상세 확인 및 결과 검증',
+    why:'정산 지급 전 필수 항목을 교차 확인하여 지급 정확도를 높이고, 인트라 기준의 정산 프로세스 지원',
+    facts:[['1~3주차','인트라 기준 전환 데이터 확인·입력·검증']],
+    refs:[] },
+  { id:'lead', g:'partner', name:'협력사 Lead 발굴·관리', score:4,
+    work:'후보 리서치, 중복 확인, 연락처·대표자·Zone 정보 등록 및 초기 파이프라인 구축',
+    why:'9월 Lead 후보 14건을 확보해 신규 Zone 운영사 선택지를 넓히고 향후 협력사 전환 기반을 마련',
+    facts:[['14','건 Lead 후보']], refs:[] },
+  { id:'register', g:'partner', name:'협력사·라이더 등록', score:4,
+    work:'계약서 작성, 인트라 벤더 등록, 거래처 등록, 라이더 기존 이력 확인 및 소속 변경 절차 수행·정리',
+    why:'신규 운영 인력 온보딩 절차를 도맡아 수행함',
+    facts:[], refs:[] },
+  { id:'holiday', g:'season', name:'명절 할증 조정', score:4,
+    work:'기존 할증 해제, 신규 1,100원·550원 할증 생성 및 대상 상점 일괄 적용',
+    why:'161개 상점의 한시적 비용 정책을 일정에 맞춰 할증 반영',
+    facts:[['161','개 상점'],['1개 지점',''],['1,100원 · 550원','']],
+    refs:[] },
+  { id:'goods', g:'partner', name:'벤더 물품 관리', score:3,
+    work:'카드리더기 주문, 구매·대여·회수 기록, 수량 반영 및 실물 라벨링 절차 관리',
+    why:'운영 물품의 재고·대여 이력을 유지 및 협력사 운영 준비를 지원',
+    facts:[], refs:[] },
+];
+const LV = {5:['l5','매우 높음','var(--lv5)'],4:['l4','높음','var(--lv4)'],3:['l3','보통','var(--lv3)']};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const gName = id => GROUPS.find(g => g.id === id).name;
+const link = ([t,u]) => `<a href="${u}" target="_blank" rel="noopener">${esc(t)}</a>`;
+
+// 범례 (실제 쓰인 등급만)
+const used = [...new Set(AREAS.map(a=>a.score))].sort((a,b)=>b-a);
+document.getElementById('legend').innerHTML = used.map(v=>`<span><i style="background:${LV[v][2]}"></i>${LV[v][1]} (${v})</span>`).join('') + '<span>· 막대를 누르면 상세로 이동합니다</span>';
+
+// 평균
+const avg = AREAS.reduce((s,a)=>s+a.score,0)/AREAS.length;
+document.getElementById('avgScore').innerHTML = `${avg.toFixed(1)} <small>/ 5</small>`;
+
+// 기여도 막대 (점수 높은 순, 같은 점수는 Notion 주요 성과 순)
+const sorted = [...AREAS].sort((a,b)=> b.score-a.score || AREAS.indexOf(a)-AREAS.indexOf(b));
+document.getElementById('bars').innerHTML = sorted.map(a => {
+  const [, lbl, col] = LV[a.score];
+  return `<button class="bar-row" data-go="${a.id}" aria-label="${esc(a.name)} ${lbl} ${a.score}점, 상세 보기">
+    <span class="nm">${esc(a.name)}<span class="grp">${esc(gName(a.g))}</span></span>
+    <span class="track"><span class="fill" style="width:${a.score*20}%;background:${col}"></span></span>
+    <span class="sc num" style="color:${col}">${a.score}/5</span>
+  </button>`;
+}).join('');
+
+// 상세 카드
+function card(a){
+  const [cls, lbl] = LV[a.score];
+  const dots = [1,2,3,4,5].map(i=>`<b class="${i<=a.score?'on':''}"></b>`).join('');
+  const facts = (a.facts||[]).length ? `<div class="facts">${a.facts.map(([n,t])=>`<span class="fact"><span class="num">${esc(n)}</span>${t?' '+esc(t):''}</span>`).join('')}</div>` : '';
+  const notes = a.notes ? `<div class="field"><span class="fl">${esc(a.notes.title)}</span><ul class="risks">${a.notes.items.map(([k,t])=>`<li><span class="pill ${a.notes.cls}">${esc(k)}</span><span>${esc(t)}</span></li>`).join('')}</ul></div>` : '';
+  const refs = (a.refs||[]).length ? `<div class="refs"><span class="fl" style="font-size:12px;color:var(--muted)">근거</span>${a.refs.map(link).join('')}</div>` : '';
+  return `<article class="card" id="a-${a.id}">
+    <div class="card-h"><h4>${esc(a.name)}</h4><span class="pill ${cls}">${lbl}<span class="dots" aria-hidden="true">${dots}</span></span></div>
+    ${facts}
+    <div class="field"><span class="fl">수행 내용</span><p>${esc(a.work)}</p></div>
+    <div class="field"><span class="fl">기여 근거</span><p>${esc(a.why)}</p></div>
+    ${notes}${refs}
+  </article>`;
+}
+let filter = 'all';
+function renderGroups(){
+  document.getElementById('groups').innerHTML = GROUPS.filter(g => filter==='all' || g.id===filter).map(g => {
+    const items = AREAS.filter(a=>a.g===g.id).sort((a,b)=>b.score-a.score);
+    return `<div class="group"><div class="group-h"><h3>${esc(g.name)}</h3><p>${esc(g.desc)}</p></div><div class="cards">${items.map(card).join('')}</div></div>`;
+  }).join('');
+}
+function renderChips(){
+  const all = [{id:'all',name:'전체',n:AREAS.length}, ...GROUPS.map(g=>({id:g.id,name:g.name,n:AREAS.filter(a=>a.g===g.id).length}))];
+  document.getElementById('chips').innerHTML = all.map(c=>`<button class="chip" id="chip-${c.id}" data-f="${c.id}" aria-pressed="${filter===c.id}">${esc(c.name)}<span class="c">${c.n}</span></button>`).join('');
+}
+document.getElementById('chips').addEventListener('click', e => {
+  const b = e.target.closest('[data-f]'); if(!b) return;
+  filter = b.dataset.f; renderChips(); renderGroups();
+});
+document.getElementById('bars').addEventListener('click', e => {
+  const b = e.target.closest('[data-go]'); if(!b) return;
+  const a = AREAS.find(x=>x.id===b.dataset.go);
+  if(filter!=='all' && filter!==a.g){ filter='all'; renderChips(); renderGroups(); }
+  const el = document.getElementById('a-'+a.id); if(!el) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.scrollIntoView({behavior: reduce?'auto':'smooth', block:'center'});
+  el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'), 1600);
+});
+renderChips(); renderGroups();
+
+</script>
+
+</body>
+</html>
